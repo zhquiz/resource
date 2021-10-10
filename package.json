@@ -10,7 +10,7 @@
     "@zhquiz/zhlevel": "https://github.com/zhquiz/npm-zhlevel.git",
     "axios": "^0.22.0",
     "better-sqlite3": "^7.4.3",
-    "jsonschema-definer": "https://github.com/patarapolw/jsonschema-definer.git"
+    "jsonschema-definer": "^1.3.2"
   },
   "devDependencies": {
     "import-sort-parser-typescript": "^6.0.0"

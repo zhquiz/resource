@@ -1,5 +1,3 @@
 module.exports = {
-  S: /** @type {import('jsonschema-definer').default} */ (
-    require('jsonschema-definer').default
-  )
+  S: require('jsonschema-definer').default
 }
