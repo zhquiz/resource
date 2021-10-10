@@ -25,17 +25,26 @@ export function absPath(...fileparts) {
 
 /**
  *
- * @param {string} filename
+ * @param {string} dirname
  * @returns {string | null}
  */
-export function ensureDirForFilename(filename) {
-  const dirname = absPath(filename, '..')
+export function ensureDir(dirname) {
+  dirname = absPath(dirname)
 
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname, { recursive: true })
     return dirname
   }
   return null
+}
+
+/**
+ *
+ * @param {string} filename
+ * @returns {string | null}
+ */
+export function ensureDirForFilename(filename) {
+  return ensureDir(path.dirname(filename))
 }
 
 export const sEntry = S.shape({

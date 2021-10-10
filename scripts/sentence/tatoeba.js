@@ -99,7 +99,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     s3.exec('COMMIT')
   }
-  // await dlCMN().catch(console.error)
+  await dlCMN().catch(console.error)
 
   const dlEN = async () => {
     console.log('Downloading the latest Tatoeba ENG.')
@@ -167,7 +167,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     s3.exec('COMMIT')
   }
-  // await dlEN().catch(console.error)
+  await dlEN().catch(console.error)
 
   const dlLinks = async () => {
     console.log('Downloading the latest Tatoeba Links.')
@@ -233,7 +233,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     s3.exec('COMMIT')
   }
-  // await dlLinks().catch(console.error)
+  await dlLinks().catch(console.error)
 
   const lv = new Level()
 
