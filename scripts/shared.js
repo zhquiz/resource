@@ -51,7 +51,7 @@ export const sEntry = S.shape({
   type: S.string().enum('character', 'vocabulary', 'sentence'),
   entry: S.list(S.string()).minItems(1),
   reading: S.list(S.string()).minItems(1),
-  translation: S.list(S.string()).minItems(1),
+  translation: S.list(S.string()),
   tag: S.list(S.string()),
   frequency: S.number().optional(),
   level: S.number().optional(),
