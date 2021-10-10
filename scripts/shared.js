@@ -49,13 +49,22 @@ export function ensureDirForFilename(filename) {
 
 export const sEntry = S.shape({
   type: S.string().enum('character', 'vocabulary', 'sentence'),
-  entry: S.list(S.string()).minItems(1),
-  reading: S.list(S.string()).minItems(1),
-  translation: S.list(S.string()),
-  tag: S.list(S.string()),
+  entry: S.list(S.string()).minItems(1).uniqueItems(),
+  reading: S.list(S.string()).minItems(1).uniqueItems(),
+  translation: S.list(S.string()).uniqueItems(),
+  tag: S.list(S.string()).uniqueItems(),
   frequency: S.number().optional(),
   level: S.number().optional(),
   hLevel: S.integer().minimum(1)
+})
+
+export const sHan = S.string().custom((s) => /^\p{sc=Han}$/u.test(s))
+
+export const sRadical = S.shape({
+  entry: sHan,
+  sub: S.list(sHan).uniqueItems(),
+  sup: S.list(sHan).uniqueItems(),
+  var: S.list(sHan).uniqueItems()
 })
 
 export const __filename = fileURLToPath(import.meta.url)
