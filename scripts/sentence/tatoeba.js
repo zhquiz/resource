@@ -31,15 +31,21 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
   );
   `)
 
-  try {
+  const dlCMN = async () => {
     console.log('Downloading the latest Tatoeba CMN.')
 
     const zipName = './cmn_sentences.tsv.bz2'
+    const outName = './cmn_sentences.tsv'
     const urlString =
       'https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences.tsv.bz2'
-    if (fs.existsSync(zipName)) {
+    try {
       fs.unlinkSync(zipName)
-    }
+    } catch (_) {}
+
+    try {
+      fs.unlinkSync(outName)
+    } catch (_) {}
+
     const f = fs.createWriteStream(zipName)
     https.get(urlString, (res) => {
       res.pipe(f)
@@ -51,7 +57,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     execSync(`bzip2 -d ${zipName}`)
 
-    const f2 = fs.createReadStream('./cmn_sentences.tsv')
+    const f2 = fs.createReadStream(outName)
     s3.exec('BEGIN')
     const stmt = s3.prepare(/* sql */ `
     INSERT INTO "sentence" ("id", "lang", "text")
@@ -92,19 +98,22 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
     })
 
     s3.exec('COMMIT')
-  } catch (e) {
-    console.error(e)
   }
+  // await dlCMN().catch(console.error)
 
-  try {
+  const dlEN = async () => {
     console.log('Downloading the latest Tatoeba ENG.')
 
     const zipName = './eng_sentences.tsv.bz2'
+    const outName = './eng_sentences.tsv'
     const urlString =
       'https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2'
-    if (fs.existsSync(zipName)) {
+    try {
       fs.unlinkSync(zipName)
-    }
+    } catch (_) {}
+    try {
+      fs.unlinkSync(outName)
+    } catch (_) {}
     const f = fs.createWriteStream(zipName)
     https.get(urlString, (res) => {
       res.pipe(f)
@@ -116,7 +125,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     execSync(`bzip2 -d ${zipName}`)
 
-    const f2 = fs.createReadStream('./eng_sentences.tsv')
+    const f2 = fs.createReadStream(outName)
     s3.exec('BEGIN')
     const stmt = s3.prepare(/* sql */ `
     INSERT INTO "sentence" ("id", "lang", "text")
@@ -157,18 +166,21 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
     })
 
     s3.exec('COMMIT')
-  } catch (e) {
-    console.error(e)
   }
+  // await dlEN().catch(console.error)
 
-  try {
+  const dlLinks = async () => {
     console.log('Downloading the latest Tatoeba Links.')
 
     const zipName = './links.tar.bz2'
+    const outName = './links.csv'
     const urlString = 'https://downloads.tatoeba.org/exports/links.tar.bz2'
-    if (fs.existsSync(zipName)) {
+    try {
       fs.unlinkSync(zipName)
-    }
+    } catch (_) {}
+    try {
+      fs.unlinkSync(outName)
+    } catch (_) {}
     const f = fs.createWriteStream(zipName)
     https.get(urlString, (res) => {
       res.pipe(f)
@@ -180,7 +192,7 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     execSync(`tar -xf ${zipName}`)
 
-    const f2 = fs.createReadStream('./links.csv')
+    const f2 = fs.createReadStream(outName)
 
     s3.exec('BEGIN')
     const stmt = s3.prepare(/* sql */ `
@@ -220,9 +232,8 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
     })
 
     s3.exec('COMMIT')
-  } catch (e) {
-    console.error(e)
   }
+  // await dlLinks().catch(console.error)
 
   const lv = new Level()
 
@@ -230,10 +241,10 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
   const db = sqlite3(filename)
   db.exec(/* sql */ `
   CREATE TABLE IF NOT EXISTS "entry" (
-    "data"      JSON NOT NULL CHECK (json_valid("data") AND substr("data",1,1)= '{'),
-    "entry"     TEXT NOT NULL AS (json_extract("data", '$.entry.0')),
-    "type"      TEXT NOT NULL AS (json_extract("data", '$.type'))
-    PRIMARY KEY ("entry1", "type")
+    "data"      JSON NOT NULL CHECK (json_valid("data") AND substr("data",1,1) = '{'),
+    "entry"     TEXT NOT NULL AS (json_extract("data", '$.entry[0]')),
+    "type"      TEXT NOT NULL AS (json_extract("data", '$.type')),
+    UNIQUE ("entry", "type")
   );
 
   CREATE TABLE IF NOT EXISTS "schema" (
@@ -292,18 +303,20 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
 
     db.transaction(() => {
       Object.values(sublot).map((p) => {
-        stmt.run(
-          sEntry.ensure({
-            type: 'sentence',
-            entry: [p.cmn],
-            reading: [makePinyin(p.cmn)],
-            translation: JSON.parse(p.eng),
-            frequency: p.frequency,
-            level: lv.vLevel(p.cmn),
-            hLevel: lv.hLevel(p.cmn),
-            tag: ['tatoeba']
-          })
-        )
+        stmt.run({
+          data: JSON.stringify(
+            sEntry.ensure({
+              type: 'sentence',
+              entry: [p.cmn],
+              reading: [makePinyin(p.cmn)],
+              translation: JSON.parse(p.eng),
+              frequency: p.frequency,
+              level: lv.vLevel(p.cmn),
+              hLevel: lv.hLevel(p.cmn),
+              tag: ['tatoeba']
+            })
+          )
+        })
       })
     })()
   }
@@ -312,8 +325,6 @@ export async function populate(filename = absPath('out/entry/tatoeba.db')) {
   s3.close()
 }
 
-if (require.main === module) {
-  ;(async function () {
-    await populate()
-  })()
-}
+;(async function () {
+  await populate()
+})()

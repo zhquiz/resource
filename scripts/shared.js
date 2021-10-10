@@ -4,7 +4,15 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import S from 'jsonschema-definer'
+// @ts-ignore
+import cjs from './commonjs.cjs'
+
+/**
+ * @type {{
+ *  S: import('jsonschema-definer').default
+ * }}
+ */
+const { S } = cjs
 
 /**
  *
@@ -12,7 +20,7 @@ import S from 'jsonschema-definer'
  * @returns {string}
  */
 export function absPath(...fileparts) {
-  return path.join(ROOTDIR, ...fileparts)
+  return path.resolve(ROOTDIR, ...fileparts)
 }
 
 /**
