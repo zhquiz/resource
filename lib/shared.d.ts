@@ -20,5 +20,5 @@ export declare const sRadical: import("jsonschema-definer").ObjectSchema<{
     var: string[];
 }, true>;
 export declare const ROOTDIR: string;
-export declare function runMain<T = any>(main: () => Promise<T>): Promise<T | null>;
+export declare function runMain<T = any>(main: () => Promise<T>): Promise<T>;
 //# sourceMappingURL=shared.d.ts.map
