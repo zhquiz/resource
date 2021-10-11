@@ -1,8 +1,9 @@
 {
   "name": "@zhquiz/resource",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "type": "module",
+  "private": true,
   "repository": "git@github.com:zhquiz/resource.git",
   "author": "Pacharapol Withayasakpunt <polv@polv.cc>",
   "license": "MIT",

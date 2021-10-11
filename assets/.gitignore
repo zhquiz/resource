@@ -1,8 +1,3 @@
-**
-
-!.gitignore
-!*.db
-
 tatoeba.db
 cedict.db
 zhquiz.db
