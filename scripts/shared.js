@@ -12,7 +12,7 @@ import cjs from './commonjs.cjs'
  *  S: import('jsonschema-definer').default
  * }}
  */
-const { S } = cjs
+export const { S } = cjs
 
 /**
  *
@@ -71,3 +71,21 @@ export const __filename = fileURLToPath(import.meta.url)
 export const __dirname = path.dirname(__filename)
 
 export const ROOTDIR = path.join(__dirname, '..')
+
+/**
+ *
+ * @param {string} import_meta_url `import.meta.url`
+ * @param {() => Promise<any>} main
+ * @returns
+ */
+export async function runMain(import_meta_url, main) {
+  const __file__ = fileURLToPath(import_meta_url)
+  if (__file__ === path.resolve(process.cwd(), process.argv[1])) {
+    return main().catch((e) => {
+      if (typeof e !== 'string') {
+        console.error(e)
+      }
+      throw e
+    })
+  }
+}

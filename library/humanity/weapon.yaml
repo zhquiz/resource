@@ -1,0 +1,137 @@
+- id: e9965745-dedd-4e7d-b608-3b0a5be94ff7
+  createdAt: 2021-04-17
+  title: Weapons
+  source: https://pasajeen.com/คำศัพท์หมวดอาวุธ-武器/
+  tag: [weapon]
+  entries:
+    - entry: 武器
+      reading: wǔqì
+      translation:
+        th: อาวุธ
+    - entry: 暗器
+      reading: ànqì
+      translation:
+        th: อาวุธลับ
+    - entry: 甲
+      reading: jiǎ
+      translation:
+        th: เกราะ
+    - entry: 剑
+      reading: jiàn
+      translation:
+        th:
+        - ดาบ
+        - กระบี่
+    - entry: 盾
+      reading: dùn
+      translation:
+        th: โล่
+    - entry: 刀
+      reading: dāo
+      translation:
+        th: มีด
+    - entry: 枪
+      reading: qiāng
+      translation:
+        th: ปืน
+    - entry: 矛
+      reading: máo
+      translation:
+        th: หอก
+    - entry: 戟
+      reading: jǐ
+      translation:
+        th: ง้าว
+    - entry: 斧
+      reading: fǔ
+      translation:
+        th: ขวาน
+    - entry: 弹弓
+      reading: dàngōng
+      translation:
+        th: หน้าไม้
+    - entry: 匕首
+      reading: bǐshǒu
+      translation:
+        th: กริช
+    - entry: 攮子
+      reading: nǎngzi
+      translation:
+        th: กริช
+    - entry: 鞭
+      reading: biān
+      translation:
+        th: แส้
+    - entry: 钢鞭
+      reading: gānbiān
+      translation:
+        th: แส้เหล็ก
+    - entry: 齿轮
+      reading: chǐlún
+      translation:
+        th: กงจักร
+    - entry: 锤
+      reading: chuí
+      translation:
+        th:
+        - ลูกตุ้ม (อาวุธสมัยโบราณ)
+        - ค้อน
+    - entry: 棒
+      reading: bàng
+      translation:
+        th: กระบอง
+    - entry: 棍
+      reading: gùn
+      translation:
+        th: กระบอง
+    - entry: 钺
+      reading: yuè
+      translation:
+        th: ขวานวงพระจันทร์
+    - entry: 钩
+      reading: gōu
+      translation:
+        th: ตะขอ
+    - entry: 叉
+      reading: chā
+      translation:
+        th: สามง่าม
+    - entry: 弓
+      reading: gōng
+      translation:
+        th:
+        - ธนู
+        - เกาทัณฑ์
+    - entry: 箭
+      reading: jiàn
+      translation:
+        th: ลูกธนู
+    - entry: 戈
+      reading: gē
+      translation:
+        th: ชื่ออาวุธชนิดหนึ่งในสมัยโบราณ
+    - entry: 抓
+      translation: กงเล็บ
+    - entry: 拐棍
+      reading: guǎigùn
+      translation:
+        th: ไม้เท้า
+    - entry: 胄
+      reading: zhòu
+      translation:
+        th: หมวกเกราะ
+    - entry: 手榴弹
+      reading: shǒuliúdàn
+      translation:
+        th: ระเบิดมือ
+    - entry: 机关枪
+      translation:
+        th: ปืนกล
+      source: cedict
+    - entry: 坦克
+      translation:
+        th: รถถัง
+      source: cedict
+    - entry: 导弹
+      english: missile
+      source: cedict

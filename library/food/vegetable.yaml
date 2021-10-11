@@ -1,0 +1,182 @@
+- id: 4390d137-9650-4530-ae52-37fb702fad68
+  createdAt: 2021-04-17
+  title: Vegetables
+  tag: [vegetable, veggie]
+  source: https://th.wikibooks.org/wiki/ภาษาจีน/คำศัพท์/ผัก
+  entries:
+    - entry: 豆角
+      reading: dòujiǎo
+      translation:
+        th: ถั่วฝักยาว
+    - entry: 豆芽菜
+      reading: dòuyácài
+      translation:
+        th: ถั่วงอก
+    - entry: 小黄瓜
+      reading: xiǎohuángguā
+      translation:
+        th: แตงกวา
+    - entry: 茼蒿
+      reading: tónghāo
+      translation:
+        th: ตังโอ๋
+    - entry: 香芋
+      reading: xiāngyù
+      translation:
+        th: ตะไคร้
+    - entry: 葱
+      reading: cōng
+      translation:
+        th: ต้นหอม
+    - entry: 红萝卜
+      reading: hóngluóbo
+      translation:
+        th: แครอท
+    - entry: 芥蓝菜
+      reading: gàiláncaì
+      translation:
+        th: คะน้า
+    - entry: 芹菜
+      reading: qíncài
+      translation:
+        th: ขึ้นช่าย
+    - entry: 姜
+      reading: jiāng
+      translation:
+        th: ขิง
+    - entry: 小玉米
+      reading: xiǎoyùmǐ
+      translation:
+        th: ข้าวโพดอ่อน
+    - entry: 韭菜
+      reading: jiǔcài
+      translation:
+        th: กุยช่าย
+    - entry: 包心菜
+      reading: bāoxīncài
+      translation:
+        th: กะหล่ำปลี
+    - entry: 菜花
+      reading: càihuā
+      translation:
+        th: กะหล่ำดอก
+    - entry: 蒜头
+      reading: suàntóu
+      translation:
+        th: กระเทียม
+    - entry: 秋葵
+      reading: qiūkuí
+      translation:
+        th: กระเจี๊ยบขาว
+    - entry: 红葱头
+      reading: hóngcōngtóu
+      translation:
+        th: หอมแดง
+    - entry: 竹笋
+      reading: zhúsǔn
+      translation:
+        th: หน่อไม้
+    - entry: 苦瓜
+      reading: kǔguā
+      translation:
+        th: มะระ
+    - entry: 茄子
+      reading: qiézi
+      translation:
+        th: มะเขือยาว
+    - entry: 小茄子
+      reading: xiǎoqiézi
+      translation:
+        th: มะเขือเปราะ
+    - entry: 西红柿
+      reading: xīhóngshì
+      translation:
+        th: มะเขือเทศ
+    - entry: 苦橙
+      reading: kǔchéng
+      translation:
+        th: มะกรูด
+    - entry: 南瓜
+      reading: nánguā
+      translation:
+        th: ฟักทอง
+    - entry: 冬瓜
+      reading: dōngguā
+      translation:
+        th: ฟัก
+    - entry: 甜椒
+      reading: tiánjiāo
+      translation:
+        th: พริกหวาน
+    - entry: 柿子椒
+      reading: shìzijiāo
+      translation:
+        th: พริกหยวก
+    - entry: 胡椒
+      reading: hújiāo
+      translation:
+        th: พริกไทย
+    - entry: 辣椒
+      reading: làjiāo
+      translation:
+        th: พริก
+    - entry: 空心菜
+      reading: kōngxīncài
+      translation:
+        th: ผักบุ้ง
+    - entry: 芫荽
+      reading: yánsuī
+      translation:
+        th: ผักชี
+    - entry: 白菜
+      reading: báicài
+      translation:
+        th: ผักกาดขาว
+    - entry: 青菜
+      reading: qīngcài
+      translation:
+        th: ผักกวางตุ้ง
+    - entry: 菠菜
+      reading: bōcài
+      translation:
+        th: ปวยเล้ง
+    - entry: 丝瓜
+      reading: sīguā
+      translation:
+        th: บวบ
+    - entry: 青菜花
+      reading: qīngcàihuā
+      translation:
+        th: บรอกโคลี
+    - entry: 豌豆
+      reading: wāndòu
+      translation:
+        th: ถั่วลันเตา
+    - entry: 紫苏
+      reading: zǐsū
+      translation:
+        th: โหระพา
+    - entry: 木耳
+      reading: mù ěr
+      translation:
+        th: เห็ดหูหนู
+    - entry: 香菇
+      reading: xiānggū
+      translation:
+        th: เห็ดหอม
+    - entry: 草菇
+      reading: cǎogū
+      translation:
+        th: เห็ดฟาง
+    - entry: 金针菇
+      reading: jīnzhēnggū
+      translation:
+        th: เห็ดเข็มทอง
+    - entry: 萝卜
+      reading: luóbo
+      translation:
+        th: หัวไชเท้า
+    - entry: 洋葱
+      reading: yángcōng
+      translation:
+        th: หอมใหญ่

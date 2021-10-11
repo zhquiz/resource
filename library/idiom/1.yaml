@@ -1,0 +1,71 @@
+- id: bbb0d3ac-6dfa-4744-b1c9-42776c173f69
+  createdAt: 2021-04-18
+  title: Money exchange (换钱)
+  type: sentence
+  tag: [money, finance]
+  source: https://th.wikibooks.org/wiki/ภาษาจีน/ประโยคที่ใช้ในชีวิตประจำวัน
+  entries:
+    - entry: 饭店里可以换钱吗？
+      reading: Fàndiàn lǐ kěyǐ huànqián ma?
+      translation:
+        th: ในโรงแรมสามารถแลกเงินได้ไหม
+    - entry: 可以换钱。
+      reading: Kěyǐ huànqián.
+      translation:
+        th: แลกเงินได้ครับ
+    - entry: 我要换钱。
+      reading: Wǒ yào huànqián.
+      translation:
+        th: ฉันจะแลกเงิน
+    - entry: 这里能换钱吗？
+      reading: Zhèlǐ néng huànqián ma?
+      translation:
+        th: ที่นี่แลกเงินได้ไหม
+    - entry: 你带什么钱？
+      reading: Nǐ dài shénme qián?
+      translation:
+        th: คุณนำเงินอะไรมา
+    - entry: 只能用泰币。
+      reading: Zhǐ néng yòng tài bì.
+      translation:
+        th: ใช้เงินไทยอย่างเดียว
+    - entry: 机场里可以换钱吗？
+      reading: Jīchǎng lǐ kěyǐ huànqián ma?
+      translation:
+        th: ในสนามบินสามารถแลกเงินได้ไหม
+    - entry: 我要换回人民币。
+      reading: Wǒ yào huàn huí rénmínbì.
+      translation:
+        th: ฉันอยากแลกกลับเป็นเงินหยวน
+    - entry: 能兑换欧元吗？
+      reading: Néng duìhuàn ōuyuán ma?
+      translation:
+        th: แลกเงินยูโรได้ไหม
+    - entry: 能兑换人民币吗？
+      reading: Néng duìhuàn rénmínbì ma?
+      translation:
+        th: แลกเงินหยวนได้ไหม
+    - entry: 换现金。
+      reading: Huàn xiànjīn.
+      translation:
+        th: แลกเงินสด
+    - entry: 换多少？
+      reading: Huàn duōshǎo?
+      translation:
+        th: แลกเท่าไหร่
+    - entry: 今天汇率是多少？
+      reading: Jīntiān huìlǜ shì duōshǎo?
+      translation:
+        th: อัตราแลกเปลี่ยนของวันนี้เท่าไหร่
+    - entry: 美元换人民币。
+      reading: Měiyuán huàn rénmínbì.
+      translation:
+        th: USดอลล่าแลกเปลี่ยนเป็นเงินหยวน
+    - entry: 一美元换多少人民币。
+      reading: Yī měiyuán huàn duōshǎo rénmínbì.
+      translation:
+        th: 1us แลกได้กี่หยวน
+    - entry: 在哪里换钱？
+      reading: Zài nǎlǐ huànqián?
+      translation:
+        th: แลกเงินที่ไหน

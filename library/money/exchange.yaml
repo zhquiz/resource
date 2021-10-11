@@ -1,0 +1,266 @@
+- id: dd011262-de97-4aaa-93b4-7de694c69991
+  createdAt: 2021-04-18
+  title: Chinese idiom (成语) Set 1
+  tag: [idiom]
+  source: https://pasajeen.com/category/นิทานสำนวนสุภาษิตจีน-成/
+  entries:
+    - entry: 暗中监视
+      reading: ànzhōng jiānshì
+      translation:
+        th: สอดแนม
+    - entry: 八九不离十
+      reading: bājiǔ bùlíshí
+      translation:
+        th: ไม่ใช่ก็ใกล้เคียง (มีความเป็นไปได้สูง มั่นใจมาก)
+      description: สำนวนที่คล้ายกัน 十有九八 ถึงไม่สิบก็มีแปดมีเก้า
+    - entry: 十有九八
+      translation:
+        th: ถึงไม่สิบก็มีแปดมีเก้า
+    - entry: 跋山涉水
+      reading: báshān shèshuǐ
+      translation:
+        th:
+        - บุกป่าฝ่าดง
+        - ข้ามน้ำข้ามเขา
+    - entry: 白日做梦
+      reading: báirì zuòmèng
+      translation:
+        th: ฝันกลางวัน
+    - entry: 白手起家
+      reading: báishǒu qǐjiā
+      translation:
+        th: สร้างตัวจากมือเปล่า
+      description: 形容在没有基础和条件很差的情况下自力更生，艰苦创业
+    - entry: 百川归海
+      reading: bǎichuān guīhǎi
+      translation:
+        th: สายน้ำทุกสายมุ่งสู่ทะเล เปรียบถึงสิ่งที่ที่แตกแยกกันกลับมารวมตัวกันในที่เดียวกัน
+    - entry: 百发百中
+      reading: bǎifā bǎizhòng
+      translation:
+        th: ยิงร้อยครั้งถูกร้อยครา เปรียบถึงมีความมั่นใจในการทำงาน/ทำอะไรก็ไม่พลาดเป้า
+    - entry: 百炼成钢
+      reading: bǎiliàn chénggāng
+      translation:
+        th: ประสบการณ์ทำให้แข็งแกร่ง
+    - entry: 百年不遇
+      reading: bǎinián bùyù
+      translation:
+        th: มีโอกาสพบเห็นได้ยากมาก
+    - entry: 百思不解
+      reading: bǎisī bùjiě
+      translation:
+        th: คิดอย่างไรก็คิดไม่ออก
+    - entry: 百事通
+      reading: bǎishìtōng
+      translation:
+        th: รอบรู้ไปทุกเรื่อง
+    - entry: 百闻不如一见
+      reading: bǎiwén bùrúyījiàn
+      translation:
+        th: สิบปากว่าไม่เท่าตาเห็น
+    - entry: 百问不厌
+      reading: bǎiwèn búyàn
+      translation:
+        th: ไม่เบื่อหน่ายต่อคำถาม เปรียบถึงยินดีให้ความช่วยเหลือ
+    - entry: 百无聊赖
+      reading: bǎiwú liáolài
+      translation:
+        th: หมดอาลัยตายอยาก
+    - entry: 百依百顺
+      reading: bǎiyī bǎishùn
+      translation:
+        th: ยอมเชื่อฟังคล้อยตามทุกอย่าง
+      description: 什么都依从。形容一切都顺从别人
+    - entry: 百折不挠
+      reading: bǎizhé bùnáo
+      translation:
+        th: ไม่ย่อท้อต่ออุปสรรคทุกอย่าง
+    - entry: 摆架子
+      reading: bǎijiàzi
+      translation:
+        th: ขี้เก๊ก/เต๊ะจุ๊ย
+    - entry: 摆阔气
+      reading: bǎikuòqì
+      translation:
+        th: อวดร่ำอวดรวย
+    - entry: 摆威风
+      reading: bǎiwēifēng
+      translation:
+        th: เบ่งอำนาจ
+    - entry: 拜把子
+      reading: bàibǎzi
+      translation:
+        th: สาบานเป็นพี่น้อง
+    - entry: 败兴而归
+      reading: bàixìng’érguī
+      translation:
+        th:
+        - กลับมาด้วยความผิดหวัง
+        - อารมณ์เสียกลับมา
+    - entry: 班门弄斧
+      reading: bānmén nòngfǔ
+      translation:
+        th:
+        - สอนจระเข้ว่ายน้ำ
+        - แสดงฝีมือต่อหน้าผู้ชำนาญ
+    - entry: 搬弄是非
+      reading: bānnòng shìfēi
+      translation:
+        th: ยุให้รำ ตำให้รั่ว
+    - entry: 半信半疑
+      reading: bànxìn bànyí
+      translation:
+        th: ฟังหูไว้หู
+    - entry: 半途而废
+      reading: bàntú’érfèi
+      translation:
+        th: ล้มเลิกแต่กลางคัน
+    - entry: 半夜三更
+      reading: bànyèsāngēng
+      translation:
+        th: ดึกดื่นค่อนคืน
+    - entry: 扮鬼脸
+      reading: bànguǐliǎn
+      translation:
+        th:
+        - ทำหน้าผี
+        - ทำหน้าทะเล้น
+    - entry: 帮倒忙
+      reading: bāngdàománg
+      translation:
+        th: ยิ่งช่วยยิ่งยุ่ง
+    - entry: 包罗万象
+      reading: bāoluówànxiàng
+      translation:
+        th: ครอบจักรวาล
+    - entry: 保护伞
+      reading: bǎohùsǎn
+      translation:
+        th: เกราะป้องกัน
+    - entry: 饱食终日
+      reading: bǎoshí zhōngrì
+      translation:
+        th: วันๆเอาแต่กิน ไม่ใช้สมองทำอะไร
+    - entry: 暴发户
+      reading: bàofāhù
+      translation:
+        th: บุคคลหรือครอบครัวที่รวยชั่วข้ามคืน
+    - entry: 卑鄙无耻
+      reading: bēibǐwúchǐ
+      translation:
+        th: ต่ำช้าไร้ยางอาย
+    - entry: 背黑锅
+      reading: bēihēiɡuō
+      translation:
+        th: แพะรับบาป
+    - entry: 背后捅刀子
+      reading: bèihòu tǒngdāozi
+      translation:
+        th: แทงข้างหลัง
+    - entry: 悲观厌世
+      reading: bēiguān yànshì
+      translation:
+        th: หมดอาลัยตายอยาก
+    - entry: 悲欢离合
+      reading: bēihuān líhé
+      translation:
+        th: คนเรามีทุกข์มีสุขมีอยู่ร่วมและพลัดพราก
+    - entry: 悲痛欲绝
+      reading: bēitòng yùjué
+      translation:
+        th:
+        - ปวดร้าวปานจะขาดใจ
+        - ใจปวดร้าวแทบแตกสลาย
+    - entry: 悲喜交集
+      reading: bēixǐ jiāojí
+      translation:
+        th: มีทั้งสุขทุกข์คละเคล้ากัน
+    - entry: 杯水车薪
+      reading: bēishuǐ chēxīn
+      translation:
+        th: น้ำน้อยแพ้ไฟ
+    - entry: 背井离乡
+      reading: bèijǐng líxiāng
+      translation:
+        th: จากบ้านไกลเมือง
+      description: 离开家乡到外地
+    - entry: 被连累受罪
+      reading: bèiliánlèi shòuzuì
+      translation:
+        th: ตกกระไดพลอยโจน
+    - entry: 比上不足，比下有余
+      reading: bǐshàngbùzú,bǐxiàyǒuyú
+      translation:
+        th: เทียบบนไม่เท่า เทียบล่างมีเหลือ
+    - entry: 闭门思过
+      reading: bìmén sīguò
+      translation:
+        th: คิดถึงความผิดผลาดที่เคยกระทำตามลำพัง
+    - entry: 闭关锁国
+      reading: bìguān suǒguó
+      translation:
+        th: ปิดประเทศไม่คบค้าสมาคมกับชาติอื่น
+    - entry: 必由之路
+      reading: bìyóu zhīlù
+      translation:
+        th:
+        - เส้นทางที่จะต้องผ่าน
+        - ต้องปฏิบัติตามกฎกติกา
+    - entry: 逼上梁山
+      reading: bīshàng liángshān
+      translation:
+        th: ถูกบีบคั้นให้ทำ
+    - entry: 比中而行, 结交益友
+      reading: bǐzhōngérxíng , jiéjiāoyìyǒu
+      translation:
+        th: เดินตามทางสายกลาง เลือกคบเพื่อนที่ดี
+    - entry: 敝帚自珍
+      reading: bìzhǒu zìzhēn
+      translation:
+        th: คนที่มองโลกในแง่ดี
+    - entry: 别有风味
+      reading: biéyǒu fēngwèi
+      translation:
+        th: มีรสชาติหรือมีเอกลักษณ์พิเศษไม่เหมือนใคร
+    - entry: 别时容易见时难
+      reading: biéshíróngyì jiànshínán
+      translation:
+        th: จากกันนั้นง่ายพบกันอีกครั้งนั้นยาก
+    - entry: 彬彬有礼
+      reading: bīnbīnyǒulǐ
+      translation:
+        th: มีมารยาทสุภาพเรียบร้อย
+    - entry: 冰山雪地
+      reading: bīngshān xuědì
+      translation:
+        th: สภาพทิวทัศน์ที่ปกคลุมไปด้วยน้ำแข็งและหิมะ
+    - entry: 冰雪聪明
+      reading: bīngxuěcōngmíng
+      translation:
+        th: ฉลาดเป็นพิเศษ
+      description: 比喻人聪明非凡
+    - entry: 兵不厌诈
+      reading: bīngbú yànzhà
+      translation:
+        th: การทหารไม่เบื่อหน่ายกลอุบาย
+    - entry: 兵来将挡，水来土掩
+      reading: bīngláijiāngdǎng, shuǐláitǔyǎn
+      translation:
+        th: ทหารมาใช้ขุนพลต้านรับ น้ำมาใช้ดินต้าน เปรียบถึงไม่ว่าจะมาวิธีไหนก็สามารถรับมือได้
+    - entry: 兵临城下
+      reading: bīnglínchéngxià
+      translation:
+        th: ทหารประชิดเมือง เปรียบถึงสถานการณ์คับขัน
+    - entry: 病从口入，祸从口出
+      reading: bìngcóngkǒurù,huòcóngkǒuchū
+      translation:
+        th: เชื้อโรคเข้าทางปาก เคราห์ร้ายเพราะปากไม่ดี
+    - entry: 病入膏肓
+      reading: bìngrù gāohuāng
+      translation:
+        th: หมดทางเยียวยารักษา
+    - entry: 博闻强识
+      readign: bówén qiángzhì
+      translation:
+        th: มีความรู้ความจำดีมาก
