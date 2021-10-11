@@ -72,7 +72,7 @@
       reading: làiháma xiǎngchītiān’éròu
       translation:
         th: กระต่ายหมายจันทร์
-      description: 蛤蟆 [háma] คางคก
+      description: '蛤蟆 [háma] คางคก'
     - entry: 力所不及
       reading: lìsuǒ bùjí
       translation:
@@ -117,11 +117,11 @@
         th: ระยะทางพิสูจน์ม้า กาลเวลาพิสูจน์คน
     - entry: 落井下石
       reading: luòjǐng xiàshí
+      english: to hit a person when he’s down
       translation:
         th:
         - ผีซ้ำด้ำพลอย
         - ซวยซ้ำซวยซ้อน
-        - to hit a person when he’s down
     - entry: 买椟还珠
       reading: mǎidú huánzhū
       translation:

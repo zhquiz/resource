@@ -48,14 +48,10 @@ export const sRadical = S.shape({
 export const ROOTDIR = path.join(__dirname, '..')
 
 export async function runMain<T = any>(main: () => Promise<T>) {
-  if (require.main === module) {
-    return main().catch((e) => {
-      if (typeof e !== 'string') {
-        console.error(e)
-      }
-      throw e
-    })
-  }
-
-  return null
+  return main().catch((e) => {
+    if (typeof e !== 'string') {
+      console.error(e)
+    }
+    throw e
+  })
 }
