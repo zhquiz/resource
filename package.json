@@ -7,8 +7,9 @@
   "author": "Pacharapol Withayasakpunt <polv@polv.cc>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --rootDir src --outDir lib",
-    "ts": "ts-node"
+    "build": "rm -rf lib && tsc --rootDir src --outDir lib",
+    "ts": "ts-node",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@zhquiz/zhlevel": "https://github.com/zhquiz/npm-zhlevel.git",
@@ -22,6 +23,7 @@
     "@types/better-sqlite3": "^7.4.0",
     "@types/js-yaml": "^4.0.3",
     "@types/node": "^16.10.3",
+    "husky": "^7.0.2",
     "import-sort-parser-typescript": "^6.0.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"

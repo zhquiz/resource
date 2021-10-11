@@ -8,7 +8,14 @@ import sqlite3 from 'better-sqlite3'
 
 import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
 
-export async function populate(filename: string, loadCache: 'dlCedict'[] = []) {
+const caches = {
+  dlCedict: true
+}
+
+export async function populate(
+  filename: string,
+  loadCache: Partial<typeof caches> = {}
+) {
   const tmpDB = absPath('cache/entry/cedict.db')
   ensureDirForFilename(tmpDB)
   process.chdir(absPath('cache/entry'))
@@ -104,7 +111,7 @@ export async function populate(filename: string, loadCache: 'dlCedict'[] = []) {
 
     s3.exec('COMMIT')
   }
-  if (loadCache.includes('dlCedict')) {
+  if (loadCache.dlCedict) {
     await dlCedict()
   }
 
@@ -206,5 +213,19 @@ export async function populate(filename: string, loadCache: 'dlCedict'[] = []) {
 }
 
 runMain(async function () {
-  await populate(absPath('out/entry/cedict.db'), ['dlCedict'])
+  const skipKW = '--skip'
+  const skip = process.argv.filter((s) => s.startsWith(skipKW))[0]
+  const skipObj = skip
+    ? Object.fromEntries(
+        skip
+          .substr(skipKW.length + 1)
+          .split(',')
+          .map((k) => [k, true])
+      )
+    : caches
+
+  await populate(
+    process.argv[2] || absPath('out/entry/cedict.db'),
+    skipObj as any
+  )
 })

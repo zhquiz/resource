@@ -8,9 +8,15 @@ import sqlite3 from 'better-sqlite3'
 
 import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
 
+const caches = {
+  dlCMN: true,
+  dlEN: true,
+  dlLinks: true
+}
+
 export async function populate(
   filename: string,
-  loadCache: ('dlCMN' | 'dlEN' | 'dlLinks')[] = []
+  loadCache: Partial<typeof caches> = {}
 ) {
   const tmpDB = absPath('cache/entry/tatoeba.db')
   ensureDirForFilename(tmpDB)
@@ -100,7 +106,7 @@ export async function populate(
 
     s3.exec('COMMIT')
   }
-  if (loadCache.includes('dlCMN')) {
+  if (loadCache.dlCMN) {
     await dlCMN()
   }
 
@@ -170,7 +176,7 @@ export async function populate(
 
     s3.exec('COMMIT')
   }
-  if (!loadCache.includes('dlEN')) {
+  if (!loadCache.dlEN) {
     await dlEN()
   }
 
@@ -238,7 +244,7 @@ export async function populate(
 
     s3.exec('COMMIT')
   }
-  if (!loadCache.includes('dlLinks')) {
+  if (!loadCache.dlLinks) {
     await dlLinks()
   }
 
@@ -333,5 +339,19 @@ export async function populate(
 }
 
 runMain(async () => {
-  await populate(absPath('out/entry/tatoeba.db'), ['dlCMN', 'dlEN', 'dlLinks'])
+  const skipKW = '--skip'
+  const skip = process.argv.filter((s) => s.startsWith(skipKW))[0]
+  const skipObj = skip
+    ? Object.fromEntries(
+        skip
+          .substr(skipKW.length + 1)
+          .split(',')
+          .map((k) => [k, true])
+      )
+    : caches
+
+  await populate(
+    process.argv[2] || absPath('out/entry/tatoeba.db'),
+    skipObj as any
+  )
 })
