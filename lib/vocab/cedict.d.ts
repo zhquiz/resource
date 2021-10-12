@@ -1,6 +1,2 @@
-declare const caches: {
-    dlCedict: boolean;
-};
-export declare function populate(filename: string, loadCache?: Partial<typeof caches>): Promise<void>;
-export {};
+export declare function populate(filename: string): Promise<void>;
 //# sourceMappingURL=cedict.d.ts.map

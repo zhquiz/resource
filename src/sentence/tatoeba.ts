@@ -8,243 +8,238 @@ import sqlite3 from 'better-sqlite3'
 
 import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
 
-const caches = {
-  dlCMN: true,
-  dlEN: true,
-  dlLinks: true
-}
-
-export async function populate(
-  filename: string,
-  loadCache: Partial<typeof caches> = {}
-) {
+export async function populate(filename: string) {
   const tmpDB = absPath('cache/entry/tatoeba.db')
   ensureDirForFilename(tmpDB)
   process.chdir(absPath('cache/entry'))
 
   const s3 = sqlite3(tmpDB)
 
-  s3.exec(/* sql */ `
-  CREATE TABLE IF NOT EXISTS "sentence" (
-    "id"      INT NOT NULL PRIMARY KEY,
-    "lang"    TEXT NOT NULL,
-    "text"    TEXT NOT NULL
-  );
+  if (process.argv.includes('--reload') || !fs.existsSync(tmpDB)) {
+    s3.exec(/* sql */ `
+    CREATE TABLE IF NOT EXISTS "sentence" (
+      "id"      INT NOT NULL PRIMARY KEY,
+      "lang"    TEXT NOT NULL,
+      "text"    TEXT NOT NULL
+    );
 
-  CREATE TABLE IF NOT EXISTS "link" (
-    "id1"     INT NOT NULL,
-    "id2"     INT NOT NULL,
-    PRIMARY KEY ("id1", "id2")
-  );
-  `)
-
-  const dlCMN = async () => {
-    console.log('Downloading the latest Tatoeba CMN.')
-
-    const zipName = './cmn_sentences.tsv.bz2'
-    const outName = './cmn_sentences.tsv'
-    const urlString =
-      'https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences.tsv.bz2'
-    try {
-      fs.unlinkSync(zipName)
-    } catch (_) {}
-
-    try {
-      fs.unlinkSync(outName)
-    } catch (_) {}
-
-    const f = fs.createWriteStream(zipName)
-    https.get(urlString, (res) => {
-      res.pipe(f)
-    })
-
-    await new Promise((resolve, reject) => {
-      f.once('error', reject).once('finish', resolve)
-    })
-
-    execSync(`bzip2 -d ${zipName}`)
-
-    const f2 = fs.createReadStream(outName)
-    s3.exec('BEGIN')
-    const stmt = s3.prepare(/* sql */ `
-    INSERT INTO "sentence" ("id", "lang", "text")
-    VALUES (@id, @lang, @text)
-    ON CONFLICT DO NOTHING
+    CREATE TABLE IF NOT EXISTS "link" (
+      "id1"     INT NOT NULL,
+      "id2"     INT NOT NULL,
+      PRIMARY KEY ("id1", "id2")
+    );
     `)
 
-    let line = ''
-    f2.on('data', (d) => {
-      const lines = (line + d.toString()).split('\n')
-      line = lines.pop() || ''
+    const dlCMN = async () => {
+      const zipName = './cmn_sentences.tsv.bz2'
+      const outName = './cmn_sentences.tsv'
+      const urlString =
+        'https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences.tsv.bz2'
 
-      lines.map((ln) => {
-        const rs = ln.split('\t')
-        if (rs.length === 3) {
-          stmt.run({
-            id: parseInt(rs[0]!),
-            lang: rs[1],
-            text: rs[2]
-          })
+      if (process.argv.includes('--reload') || !fs.existsSync(outName)) {
+        console.log('Downloading the latest Tatoeba CMN.')
+
+        if (fs.existsSync(zipName)) {
+          fs.unlinkSync(zipName)
         }
-      })
-    })
-
-    await new Promise<void>((resolve, reject) => {
-      f2.once('error', reject).once('end', () => {
-        const rs = line.split('\t')
-        if (rs.length === 3) {
-          stmt.run({
-            id: parseInt(rs[0]!),
-            lang: rs[1],
-            text: rs[2]
-          })
+        if (fs.existsSync(outName)) {
+          fs.unlinkSync(outName)
         }
 
-        resolve()
-      })
-    })
+        const f = fs.createWriteStream(zipName)
+        https.get(urlString, (res) => {
+          res.pipe(f)
+        })
 
-    s3.exec('COMMIT')
-  }
-  if (loadCache.dlCMN) {
+        await new Promise((resolve, reject) => {
+          f.once('error', reject).once('finish', resolve)
+        })
+
+        execSync(`bzip2 -d ${zipName}`)
+      }
+
+      const f2 = fs.createReadStream(outName)
+      s3.exec('BEGIN')
+      const stmt = s3.prepare(/* sql */ `
+      INSERT INTO "sentence" ("id", "lang", "text")
+      VALUES (@id, @lang, @text)
+      ON CONFLICT DO NOTHING
+      `)
+
+      let line = ''
+      f2.on('data', (d) => {
+        const lines = (line + d.toString()).split('\n')
+        line = lines.pop() || ''
+
+        lines.map((ln) => {
+          const rs = ln.split('\t')
+          if (rs.length === 3) {
+            stmt.run({
+              id: parseInt(rs[0]!),
+              lang: rs[1],
+              text: rs[2]
+            })
+          }
+        })
+      })
+
+      await new Promise<void>((resolve, reject) => {
+        f2.once('error', reject).once('end', () => {
+          const rs = line.split('\t')
+          if (rs.length === 3) {
+            stmt.run({
+              id: parseInt(rs[0]!),
+              lang: rs[1],
+              text: rs[2]
+            })
+          }
+
+          resolve()
+        })
+      })
+
+      s3.exec('COMMIT')
+    }
     await dlCMN()
-  }
 
-  const dlEN = async () => {
-    console.log('Downloading the latest Tatoeba ENG.')
+    const dlEN = async () => {
+      const zipName = './eng_sentences.tsv.bz2'
+      const outName = './eng_sentences.tsv'
+      const urlString =
+        'https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2'
 
-    const zipName = './eng_sentences.tsv.bz2'
-    const outName = './eng_sentences.tsv'
-    const urlString =
-      'https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2'
-    try {
-      fs.unlinkSync(zipName)
-    } catch (_) {}
-    try {
-      fs.unlinkSync(outName)
-    } catch (_) {}
-    const f = fs.createWriteStream(zipName)
-    https.get(urlString, (res) => {
-      res.pipe(f)
-    })
+      if (process.argv.includes('--reload') || !fs.existsSync(outName)) {
+        console.log('Downloading the latest Tatoeba ENG.')
 
-    await new Promise((resolve, reject) => {
-      f.once('error', reject).once('finish', resolve)
-    })
-
-    execSync(`bzip2 -d ${zipName}`)
-
-    const f2 = fs.createReadStream(outName)
-    s3.exec('BEGIN')
-    const stmt = s3.prepare(/* sql */ `
-    INSERT INTO "sentence" ("id", "lang", "text")
-    VALUES (@id, @lang, @text)
-    ON CONFLICT DO NOTHING
-    `)
-
-    let line = ''
-    f2.on('data', (d) => {
-      const lines = (line + d.toString()).split('\n')
-      line = lines.pop() || ''
-
-      lines.map((ln) => {
-        const rs = ln.split('\t')
-        if (rs.length === 3) {
-          stmt.run({
-            id: parseInt(rs[0]!),
-            lang: rs[1],
-            text: rs[2]
-          })
+        if (fs.existsSync(zipName)) {
+          fs.unlinkSync(zipName)
         }
-      })
-    })
-
-    await new Promise<void>((resolve, reject) => {
-      f2.once('error', reject).once('end', () => {
-        const rs = line.split('\t')
-        if (rs.length === 3) {
-          stmt.run({
-            id: parseInt(rs[0]!),
-            lang: rs[1],
-            text: rs[2]
-          })
+        if (fs.existsSync(outName)) {
+          fs.unlinkSync(outName)
         }
+        const f = fs.createWriteStream(zipName)
+        https.get(urlString, (res) => {
+          res.pipe(f)
+        })
 
-        resolve()
+        await new Promise((resolve, reject) => {
+          f.once('error', reject).once('finish', resolve)
+        })
+
+        execSync(`bzip2 -d ${zipName}`)
+      }
+
+      const f2 = fs.createReadStream(outName)
+      s3.exec('BEGIN')
+      const stmt = s3.prepare(/* sql */ `
+      INSERT INTO "sentence" ("id", "lang", "text")
+      VALUES (@id, @lang, @text)
+      ON CONFLICT DO NOTHING
+      `)
+
+      let line = ''
+      f2.on('data', (d) => {
+        const lines = (line + d.toString()).split('\n')
+        line = lines.pop() || ''
+
+        lines.map((ln) => {
+          const rs = ln.split('\t')
+          if (rs.length === 3) {
+            stmt.run({
+              id: parseInt(rs[0]!),
+              lang: rs[1],
+              text: rs[2]
+            })
+          }
+        })
       })
-    })
 
-    s3.exec('COMMIT')
-  }
-  if (!loadCache.dlEN) {
+      await new Promise<void>((resolve, reject) => {
+        f2.once('error', reject).once('end', () => {
+          const rs = line.split('\t')
+          if (rs.length === 3) {
+            stmt.run({
+              id: parseInt(rs[0]!),
+              lang: rs[1],
+              text: rs[2]
+            })
+          }
+
+          resolve()
+        })
+      })
+
+      s3.exec('COMMIT')
+    }
     await dlEN()
-  }
 
-  const dlLinks = async () => {
-    console.log('Downloading the latest Tatoeba Links.')
+    const dlLinks = async () => {
+      const zipName = './links.tar.bz2'
+      const outName = './links.csv'
+      const urlString = 'https://downloads.tatoeba.org/exports/links.tar.bz2'
 
-    const zipName = './links.tar.bz2'
-    const outName = './links.csv'
-    const urlString = 'https://downloads.tatoeba.org/exports/links.tar.bz2'
-    try {
-      fs.unlinkSync(zipName)
-    } catch (_) {}
-    try {
-      fs.unlinkSync(outName)
-    } catch (_) {}
-    const f = fs.createWriteStream(zipName)
-    https.get(urlString, (res) => {
-      res.pipe(f)
-    })
+      if (process.argv.includes('--reload') || !fs.existsSync(outName)) {
+        console.log('Downloading the latest Tatoeba Links.')
 
-    await new Promise((resolve, reject) => {
-      f.once('error', reject).once('finish', resolve)
-    })
-
-    execSync(`tar -xf ${zipName}`)
-
-    const f2 = fs.createReadStream(outName)
-
-    s3.exec('BEGIN')
-    const stmt = s3.prepare(/* sql */ `
-    INSERT INTO "link" ("id1", "id2")
-    VALUES (@id1, @id2)
-    ON CONFLICT DO NOTHING
-    `)
-
-    let line = ''
-    f2.on('data', (d) => {
-      const lines = (line + d.toString()).split('\n')
-      line = lines.pop() || ''
-
-      lines.map((ln) => {
-        const rs = ln.split('\t')
-        if (rs.length === 2) {
-          stmt.run({
-            id1: parseInt(rs[0]!),
-            id2: parseInt(rs[1]!)
-          })
+        if (fs.existsSync(zipName)) {
+          fs.unlinkSync(zipName)
         }
-      })
-    })
-
-    await new Promise<void>((resolve, reject) => {
-      f2.once('error', reject).once('end', () => {
-        const rs = line.split('\t')
-        if (rs.length === 2) {
-          stmt.run({
-            id1: parseInt(rs[0]!),
-            id2: parseInt(rs[1]!)
-          })
+        if (fs.existsSync(outName)) {
+          fs.unlinkSync(outName)
         }
+        const f = fs.createWriteStream(zipName)
+        https.get(urlString, (res) => {
+          res.pipe(f)
+        })
 
-        resolve()
+        await new Promise((resolve, reject) => {
+          f.once('error', reject).once('finish', resolve)
+        })
+
+        execSync(`tar -xf ${zipName}`)
+      }
+
+      const f2 = fs.createReadStream(outName)
+
+      s3.exec('BEGIN')
+      const stmt = s3.prepare(/* sql */ `
+      INSERT INTO "link" ("id1", "id2")
+      VALUES (@id1, @id2)
+      ON CONFLICT DO NOTHING
+      `)
+
+      let line = ''
+      f2.on('data', (d) => {
+        const lines = (line + d.toString()).split('\n')
+        line = lines.pop() || ''
+
+        lines.map((ln) => {
+          const rs = ln.split('\t')
+          if (rs.length === 2) {
+            stmt.run({
+              id1: parseInt(rs[0]!),
+              id2: parseInt(rs[1]!)
+            })
+          }
+        })
       })
-    })
 
-    s3.exec('COMMIT')
-  }
-  if (!loadCache.dlLinks) {
+      await new Promise<void>((resolve, reject) => {
+        f2.once('error', reject).once('end', () => {
+          const rs = line.split('\t')
+          if (rs.length === 2) {
+            stmt.run({
+              id1: parseInt(rs[0]!),
+              id2: parseInt(rs[1]!)
+            })
+          }
+
+          resolve()
+        })
+      })
+
+      s3.exec('COMMIT')
+    }
     await dlLinks()
   }
 
@@ -277,6 +272,10 @@ export async function populate(
     schema: JSON.stringify(sEntry.valueOf())
   })
 
+  const stmt = db.prepare(/* sql */ `
+  INSERT OR REPLACE INTO "entry" ("data") VALUES (@data);
+  `)
+
   const batchSize = 5000
 
   const lots = s3
@@ -294,10 +293,6 @@ export async function populate(
   `
     )
     .all()
-
-  const stmt = db.prepare(/* sql */ `
-  INSERT OR REPLACE INTO "entry" ("data") VALUES (@data);
-  `)
 
   for (let i = 0; i < lots.length; i += batchSize) {
     console.log(i)
@@ -338,20 +333,8 @@ export async function populate(
   s3.close()
 }
 
-runMain(async () => {
-  const skipKW = '--skip'
-  const skip = process.argv.filter((s) => s.startsWith(skipKW))[0]
-  const skipObj = skip
-    ? Object.fromEntries(
-        skip
-          .substr(skipKW.length + 1)
-          .split(',')
-          .map((k) => [k, true])
-      )
-    : caches
-
-  await populate(
-    process.argv[2] || absPath('out/entry/tatoeba.db'),
-    skipObj as any
-  )
-})
+if (require.main === module) {
+  runMain(async () => {
+    await populate(process.argv[2] || absPath('out/entry/tatoeba.db'))
+  })
+}

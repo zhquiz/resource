@@ -70,7 +70,10 @@ export async function populate(filename: string) {
                 )
                   .split('/')
                   .filter((s) => s),
-                english: (p.english as string).split('/').filter((s) => s),
+                english: (p.english as string)
+                  .split('/')
+                  .filter((s) => s)
+                  .filter((a, i, r) => r.indexOf(a) === i),
                 frequency: Math.log10(p.frequency) || undefined,
                 level,
                 hLevel: level
@@ -86,6 +89,8 @@ export async function populate(filename: string) {
   s3.close()
 }
 
-runMain(async () => {
-  await populate(absPath('out/entry/junda.db'))
-})
+if (require.main === module) {
+  runMain(async () => {
+    await populate(process.argv[2] || absPath('out/entry/junda.db'))
+  })
+}

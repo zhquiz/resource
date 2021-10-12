@@ -8,58 +8,56 @@ import sqlite3 from 'better-sqlite3'
 
 import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
 
-const caches = {
-  dlCedict: true
-}
-
-export async function populate(
-  filename: string,
-  loadCache: Partial<typeof caches> = {}
-) {
+export async function populate(filename: string) {
   const tmpDB = absPath('cache/entry/cedict.db')
   ensureDirForFilename(tmpDB)
   process.chdir(absPath('cache/entry'))
 
   const s3 = sqlite3(filename)
 
-  s3.exec(/* sql */ `
-  CREATE TABLE IF NOT EXISTS "cedict" (
-    "simplified"    TEXT NOT NULL,
-    "traditional"   TEXT CHECK ("simplified" != "traditional"),
-    "reading"       TEXT,
-    "english"       JSON
-  );
+  if (process.argv.includes('--reload') || !fs.existsSync(tmpDB)) {
+    s3.exec(/* sql */ `
+    CREATE TABLE IF NOT EXISTS "cedict" (
+      "simplified"    TEXT NOT NULL,
+      "traditional"   TEXT CHECK ("simplified" != "traditional"),
+      "reading"       TEXT,
+      "english"       JSON
+    );
 
-  CREATE UNIQUE INDEX IF NOT EXISTS idx_u_cedict ON "cedict" ("simplified", "traditional", "reading");
-  `)
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_u_cedict ON "cedict" ("simplified", "traditional", "reading");
+    `)
+  }
 
   const dlCedict = async () => {
-    console.log('Downloading the latest CEDICT.')
-
     const zipName = './cedict_1_0_ts_utf-8_mdbg.txt.gz'
     const outName = './cedict_1_0_ts_utf-8_mdbg.txt'
-    try {
-      fs.unlinkSync(zipName)
-    } catch (_) {}
-    try {
-      fs.unlinkSync(outName)
-    } catch (_) {}
 
-    const urlString =
-      'https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz'
-    if (fs.existsSync(zipName)) {
-      fs.unlinkSync(zipName)
+    if (process.argv.includes('--reload') || !fs.existsSync(outName)) {
+      console.log('Downloading the latest CEDICT.')
+
+      if (fs.existsSync(zipName)) {
+        fs.unlinkSync(zipName)
+      }
+      if (fs.existsSync(outName)) {
+        fs.unlinkSync(outName)
+      }
+
+      const urlString =
+        'https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz'
+      if (fs.existsSync(zipName)) {
+        fs.unlinkSync(zipName)
+      }
+      const f = fs.createWriteStream(zipName)
+      https.get(urlString, (res) => {
+        res.pipe(f)
+      })
+
+      await new Promise((resolve, reject) => {
+        f.once('error', reject).once('finish', resolve)
+      })
+
+      execSync(`gzip -d ${zipName}`)
     }
-    const f = fs.createWriteStream(zipName)
-    https.get(urlString, (res) => {
-      res.pipe(f)
-    })
-
-    await new Promise((resolve, reject) => {
-      f.once('error', reject).once('finish', resolve)
-    })
-
-    execSync(`gzip -d ${zipName}`)
 
     const f2 = fs.createReadStream(outName)
     s3.exec('BEGIN')
@@ -111,9 +109,7 @@ export async function populate(
 
     s3.exec('COMMIT')
   }
-  if (loadCache.dlCedict) {
-    await dlCedict()
-  }
+  await dlCedict()
 
   const lv = new Level()
 
@@ -196,7 +192,9 @@ export async function populate(
               type: 'vocabulary',
               tag: ['cedict'],
               entry,
-              reading: JSON.parse(p.reading),
+              reading: [...new Set<string>(JSON.parse(p.reading))].sort(
+                ([a0 = '']) => (a0.toLocaleLowerCase() === a0 ? 1 : 0)
+              ),
               english,
               level: lv.vLevel(p.simplified),
               hLevel: lv.hLevel(p.simplified),
@@ -212,20 +210,8 @@ export async function populate(
   s3.close()
 }
 
-runMain(async function () {
-  const skipKW = '--skip'
-  const skip = process.argv.filter((s) => s.startsWith(skipKW))[0]
-  const skipObj = skip
-    ? Object.fromEntries(
-        skip
-          .substr(skipKW.length + 1)
-          .split(',')
-          .map((k) => [k, true])
-      )
-    : caches
-
-  await populate(
-    process.argv[2] || absPath('out/entry/cedict.db'),
-    skipObj as any
-  )
-})
+if (require.main === module) {
+  runMain(async () => {
+    await populate(process.argv[2] || absPath('out/entry/cedict.db'))
+  })
+}

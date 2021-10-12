@@ -106,6 +106,8 @@ export async function populate(filename: string) {
   s3.close()
 }
 
-runMain(async () => {
-  await populate(absPath('out/radical.db'))
-})
+if (require.main === module) {
+  runMain(async () => {
+    await populate(process.argv[2] || absPath('out/radical.db'))
+  })
+}
