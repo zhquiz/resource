@@ -85,6 +85,7 @@ export async function populate(filename: string) {
     })()
   }
 
+  lv.close()
   db.close()
   s3.close()
 }
