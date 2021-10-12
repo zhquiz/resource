@@ -1,12 +1,13 @@
 import fs from 'fs'
 
 import { makePinyin } from '@zhquiz/zhlevel'
+import { sLibrary, sType } from '@zhquiz/zhlevel/lib/schema'
 import sqlite3 from 'better-sqlite3'
 import fg from 'fast-glob'
 import yaml from 'js-yaml'
 import S from 'jsonschema-definer'
 
-import { absPath, ensureDirForFilename, sEntry, sType } from './shared'
+import { absPath, ensureDirForFilename } from './shared'
 
 export const sLibraryRaw = S.shape({
   id: S.string().format('uuid'),
@@ -49,20 +50,6 @@ export const sLibraryRaw = S.shape({
   type: sType.optional(),
   description: S.string().optional(),
   tag: S.list(S.string()).optional()
-}).additionalProperties(true)
-
-export const sLibrary = S.shape({
-  id: S.string().format('uuid'),
-  createdAt: S.string().format('date-time'),
-  updatedAt: S.string().format('date-time'),
-  isShared: S.boolean(),
-  title: S.string(),
-  entries: S.list(
-    sEntry.partial().required('entry').additionalProperties(true)
-  ).minItems(1),
-  type: sType,
-  description: S.string(),
-  tag: S.list(S.string())
 }).additionalProperties(true)
 
 export async function populate(filename: string) {

@@ -1,6 +1,7 @@
+import { sRadical } from '@zhquiz/zhlevel/lib/schema'
 import sqlite3 from 'better-sqlite3'
 
-import { absPath, ensureDirForFilename, runMain, sRadical } from '../shared'
+import { absPath, ensureDirForFilename, runMain } from '../shared'
 
 export async function populate(filename: string) {
   const s3 = sqlite3(absPath('assets/radical.db'), {

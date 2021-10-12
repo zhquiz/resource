@@ -1,7 +1,8 @@
 import { Level, makePinyin } from '@zhquiz/zhlevel'
+import { sEntry } from '@zhquiz/zhlevel/lib/schema'
 import sqlite3 from 'better-sqlite3'
 
-import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
+import { absPath, ensureDirForFilename, runMain } from '../shared'
 
 export async function populate(filename: string) {
   const s3 = sqlite3(absPath('assets/junda.db'), {
@@ -74,6 +75,7 @@ export async function populate(filename: string) {
                   .split('/')
                   .filter((s) => s)
                   .filter((a, i, r) => r.indexOf(a) === i),
+                translation: {},
                 frequency: Math.log10(p.frequency) || undefined,
                 level,
                 hLevel: level

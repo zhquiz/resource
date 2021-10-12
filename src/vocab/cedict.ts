@@ -3,9 +3,10 @@ import fs from 'fs'
 import https from 'https'
 
 import { Frequency, Level } from '@zhquiz/zhlevel'
+import { sEntry } from '@zhquiz/zhlevel/lib/schema'
 import sqlite3 from 'better-sqlite3'
 
-import { absPath, ensureDirForFilename, runMain, sEntry } from '../shared'
+import { absPath, ensureDirForFilename, runMain } from '../shared'
 
 export async function populate(filename: string) {
   const tmpDB = absPath('cache/entry/cedict.db')
@@ -165,7 +166,7 @@ export async function populate(filename: string) {
     const sublot: Record<string, any> = {}
     lots.slice(i, i + batchSize).map((p) => (sublot[p.simplified] = p))
 
-    const { data: fMap } = await f.vFreq(...Object.keys(sublot))
+    const fMap = await f.vFreq(...Object.keys(sublot))
     for (const [k, f] of Object.entries(fMap)) {
       sublot[k].frequency = f
     }
@@ -191,6 +192,7 @@ export async function populate(filename: string) {
                 ([a0 = '']) => (a0.toLocaleLowerCase() === a0 ? 1 : 0)
               ),
               english,
+              translation: {},
               level: lv.vLevel(p.simplified),
               hLevel: lv.hLevel(p.simplified),
               frequency: p.frequency

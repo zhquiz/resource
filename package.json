@@ -7,7 +7,7 @@
   "author": "Pacharapol Withayasakpunt <polv@polv.cc>",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf lib && tsc --rootDir src --outDir lib",
+    "start": "yarn ts src/index.ts",
     "ts": "ts-node",
     "prepare": "husky install"
   },
